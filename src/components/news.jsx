@@ -13,7 +13,7 @@ export default class news extends Component {
    }
 
    async componentDidMount(){
-    let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=dee054eb0f7742b785a70fd5bf1bf869&pageSize=${this.props.pageSize}`;
+    let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=dee054eb0f7742b785a70fd5bf1bf869&category=${this.props.category}&pageSize=${this.props.pageSize}`;
     this.setState({loading:true});
     let data = await fetch(url);
     let prassedData = await data.json()
@@ -26,7 +26,7 @@ export default class news extends Component {
 
     handlePreviousPage = async() => {
       console.log("Previous")
-      let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=dee054eb0f7742b785a70fd5bf1bf869&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
+      let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=dee054eb0f7742b785a70fd5bf1bf869&category=${this.props.category}&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
       this.setState({loading:true});
       let data = await fetch(url);
       let prassedData = await data.json()
@@ -39,8 +39,8 @@ export default class news extends Component {
 
     handleNextPage = async() => {
       console.log("Next")
-      if (this.state.page +1 > Math.ceil(this.state.totalResults / this.state.page)) {
-        let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=dee054eb0f7742b785a70fd5bf1bf869&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
+      if (this.state.page +1 > Math.ceil(this.state.totalResults / this.state.pageSize)) {
+        let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=dee054eb0f7742b785a70fd5bf1bf869&category=${this.props.category}&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
         this.setState({loading:true});
         let data = await fetch(url);
         let prassedData = await data.json()
@@ -54,7 +54,7 @@ export default class news extends Component {
     }
   render() {
     return (
-      <div className='container'>
+      <div className='container news-headline'>
         
         <h1>Today's Top Headline</h1> 
         
@@ -63,7 +63,7 @@ export default class news extends Component {
           { ! this.state.loading && this.state.articles.map(
             (element) => {
               return <div className='col-md-4' key={element.url}>
-              <NewsItem title={element.title ? element.title.slice(0,55) : " "} description={element.description ? element.description.slice(0,88) : " "} imageUrl={element.urlToImage} newsUrl={element.url}/>
+              <NewsItem title={element.title ? element.title.slice(0,80) : " "} description={element.description ? element.description.slice(0,60) : " "} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name}/>
               </div>
   
             }
