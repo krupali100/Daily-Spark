@@ -13,6 +13,7 @@ export default class App extends Component {
      country : "us",
     category : "Science"
   }
+
   static propTypes = {
    pageSize: PropTypes.number,
    country: PropTypes.string,
@@ -30,6 +31,7 @@ export default class App extends Component {
     }) )
   }
   render() {
+
     const{isDarkMode} = this.state;
     const themeClass = isDarkMode ? 'dark-mode' : 'light-mode';
     return (
