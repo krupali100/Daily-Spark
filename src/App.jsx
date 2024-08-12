@@ -6,6 +6,7 @@ import './App.css'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Routes,  Route } from 'react-router-dom'
 import AboutUs from './components/AboutUs'
+import LoadingBar from 'react-top-loading-bar'
 
 export default class App extends Component {
   static defaultProps={
