@@ -19,9 +19,12 @@ export default class news extends Component {
   }
 
   async UpdateNews(PageNo) {
+    this.props.setProgress(10);
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=dee054eb0f7742b785a70fd5bf1bf869&category=${this.props.category}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
     this.setState({ loading: true });
+    this.props.setProgress(30);
     let data = await fetch(url);
+    this.props.setProgress(70);
     let prassedData = await data.json()
     console.log(prassedData)
     this.setState({
@@ -29,6 +32,7 @@ export default class news extends Component {
       totalResults: prassedData.totalResults,
       loading: false
     });
+    this.props.setProgress(100);
     document.title = `${this.capitalizeFirstletter(this.props.category)} - Daily Spark`
   }
 
@@ -60,7 +64,7 @@ export default class news extends Component {
     let prassedData = await data.json()
     console.log(prassedData)
     this.setState({
-      articles: prassedData.articles,
+      articles: prassedData.articles.concat(this.state.articles),
       totalResults: prassedData.totalResults,
       loading: false
     });
@@ -68,6 +72,7 @@ export default class news extends Component {
   };
   render() {
     console.log("Welcome to Constructor")
+    
     return (
       <div className='container news-headline'>
 
@@ -79,8 +84,13 @@ export default class news extends Component {
           next={this.fetchMoreData}
           hasMore={this.state.articles.length < this.state.totalResults}
           loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+             <b>Yay! You have seen it all</b>
+            </p>
+          }
         >
-
+        
           <div className="container">
             <div className='row'>
               {this.state.articles.map(
