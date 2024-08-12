@@ -30,6 +30,15 @@ export default class App extends Component {
       isDarkMode : !prevState.isDarkMode,
     }) )
   }
+
+  state= {
+    progress:0
+  }
+
+  setProgress = (progress) => {
+    this.setState({progress:progress})
+  }
+
   render() {
     const{isDarkMode} = this.state;
     const themeClass = isDarkMode ? 'dark-mode' : 'light-mode';
@@ -38,6 +47,11 @@ export default class App extends Component {
       <Router>
         <div className={`app ${themeClass}`}>
        <Navbar toggleMode={this.toggleDarkMode}/>
+       <LoadingBar
+        color='#f11946'
+        progress={this.state.progress}
+      />
+
        <Routes>
        <Route  path='/' element={ <News key="general" pageSize={6} country={"in"} category={"general"}/>} /> 
        <Route  path='/business' element={ <News key="business" pageSize={6} country={"in"} category={"business"}/>} /> 
