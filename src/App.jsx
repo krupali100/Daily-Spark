@@ -31,13 +31,7 @@ export default class App extends Component {
     }) )
   }
 
-  state= {
-    progress:0
-  }
 
-  setProgress = (progress) => {
-    this.setState({progress:progress})
-  }
 
   render() {
     const{isDarkMode} = this.state;
