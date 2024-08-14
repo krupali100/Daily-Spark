@@ -3,7 +3,7 @@ import NewsItem from './NewsItem'
 import InfiniteScroll from "react-infinite-scroll-component";
 // import Loader from './Loader'
 
-export class News extends Component {
+export class news extends Component {
     constructor() {
         super();
         this.state = {
@@ -21,9 +21,12 @@ export class News extends Component {
 
 
     async UpadateNews(PageNo) {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=dee054eb0f7742b785a70fd5bf1bf869&category=${this.props.category}&pageSize=${this.props.pageSize}&page=${PageNo}`;
+        this.props.setProgress(10);
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=${this.props.  apiKey}&category=${this.props.category}&pageSize=${this.props.pageSize}&page=${PageNo}`;
         this.setState({ loading: true });
+        this.props.setProgress(30);
         let data = await fetch(url);
+        this.props.setProgress(70);
         let parsedData = await data.json();
         console.log(parsedData);
         this.setState({
@@ -31,6 +34,7 @@ export class News extends Component {
             totalResults: parsedData.totalResults,
             loading: false,
         });
+        this.props.setProgress(100);
         document.title = `${this.capitalizeFirstLetter(this.props.category)} - Daily Spark`
     }
 
@@ -86,4 +90,4 @@ export class News extends Component {
     }
 }
 
-export default News
+export default news
