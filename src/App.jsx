@@ -19,14 +19,14 @@ export class App extends Component {
         country: PropTypes.string,
         category: PropTypes.string,
     }
-
-    constructor(props) {
+constructor(props) {
         super(props);
         this.state = {
             isDarkMode: false,
             apiKey: process.env.REACT_APP_API_KEY,
             progress:0
         }
+    
 
     }
     toggleDarkMode = () => {
